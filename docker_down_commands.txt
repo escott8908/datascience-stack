@@ -1,0 +1,4 @@
+ 1441  docker-compose down -v
+ 1445  docker-compose down
+ 1519  docker-compose down -v && docker-compose build --no-cache jupyterlab && docker-compose up -d
+
