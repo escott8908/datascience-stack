@@ -8,10 +8,49 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
+      POSTGRES_DB: mlflow
     volumes:
-      - pgdata:/var/lib/postgresql/data
-    networks:
-      - localnet
+      - /home/escott/data_analysis/pgdata:/var/lib/postgresql/data
+    networks: [localnet]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d mlflow || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  mlflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.mlflow   # (your image with psycopg2-binary)
+    image: mlflow-with-drivers:latest
+    container_name: mlflow
+    restart: always
+    ports: ["5000:5000"]
+    environment:
+      # Defaults ensure we never pass empty args
+      MLFLOW_BACKEND_STORE_URI: ${MLFLOW_BACKEND_STORE_URI:-postgresql+psycopg2://admin:admin@postgres:5432/mlflow}
+      MLFLOW_ARTIFACTS_DESTINATION: ${MLFLOW_ARTIFACTS_DESTINATION:-file:/mlartifacts}
+    volumes:
+      - /home/escott/data_analysis/mlflow:/mlflow
+      - /home/escott/data_analysis/mlartifacts:/mlartifacts
+    depends_on:
+      postgres:
+        condition: service_healthy
+    # Use array form so the exact command runs
+    entrypoint: ["mlflow"]
+    command:
+      - server
+      - --host
+      - 0.0.0.0
+      - --port
+      - "5000"
+      - --backend-store-uri
+      - ${MLFLOW_BACKEND_STORE_URI}
+      - --artifacts-destination
+      - ${MLFLOW_ARTIFACTS_DESTINATION}
+      - --serve-artifacts
+    networks: [localnet]
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -42,18 +81,6 @@ services:
     networks:
       - localnet
 
-  mlflow:
-    image: ghcr.io/mlflow/mlflow:v2.12.1  # Or your preferred version
-    container_name: mlflow
-    ports:
-      - "5000:5000"
-    volumes:
-      - /home/escott/data_analysis/mlflow:/mlflow/mlruns  # Local volume for experiment logs
-    environment:
-      - MLFLOW_BACKEND_STORE_URI=/mlflow/mlruns
-    command: mlflow ui --host 0.0.0.0 --port 5000 --backend-store-uri /mlflow/mlruns
-    networks:
-      - localnet
 
 volumes:
   pgdata:

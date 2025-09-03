@@ -1,0 +1,4 @@
+FROM ghcr.io/mlflow/mlflow:latest
+# Add DB driver (and boto3 if you later use S3/MinIO)
+RUN pip install --no-cache-dir psycopg2-binary boto3
+RUN apt-get update
