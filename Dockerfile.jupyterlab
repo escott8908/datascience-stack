@@ -1,0 +1,54 @@
+FROM jupyter/base-notebook:latest
+
+# Switch to root to install system-level packages
+USER root
+
+# Install system dependencies for PostgreSQL, SHAP, etc.
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    libpq-dev \
+    gcc \
+    g++ \
+    libatlas-base-dev \
+    texlive-xetex \
+    texlive-fonts-recommended \
+    texlive-plain-generic \
+    texlive-latex-extra \
+    texlive-science \
+    latexmk \    
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Switch back to the Jupyter user
+USER $NB_UID
+
+# Install Python packages
+RUN pip install --no-cache-dir \
+    pandas \
+    numpy \
+    scipy \
+    seaborn \
+    matplotlib \
+    scikit-learn \
+    ydata-profiling \
+    plotly \
+    panel \
+    xgboost \
+    lightgbm \
+    statsmodels \
+    torch \
+    missingno \
+    feature-engine \
+    category_encoders \
+    psycopg2-binary \
+    sqlalchemy \
+    mlflow \
+    optuna \
+    shap \
+    lime \
+    openpyxl \
+    requests \
+    tqdm \
+    joblib \
+    panel \ 
+    streamlit
+
