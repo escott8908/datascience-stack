@@ -41,7 +41,7 @@ RUN pip install --no-cache-dir \
     category_encoders \
     psycopg2-binary \
     sqlalchemy \
-    mlflow \
+    mlflow==2.22.1 \
     optuna \
     shap \
     lime \
