@@ -1,0 +1,11 @@
+# Dockerfile.vscode
+FROM ghcr.io/coder/code-server:latest
+
+# Preinstall extensions (Open VSX IDs)
+# - CodeGPT (DanielSanMedium.dscodegpt)
+# - Python + Jupyter (handy for DS work)
+RUN code-server --install-extension DanielSanMedium.dscodegpt \
+ && code-server --install-extension ms-python.python \
+ && code-server --install-extension ms-toolsai.jupyter \
+ && code-server --install-extension Continue.continue
+
