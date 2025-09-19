@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:latest
@@ -97,7 +95,7 @@ services:
     volumes:
       - /home/escott/data_analysis/vscode/projects:/home/coder/projects
       - /home/escott/data_analysis/vscode/vscode-data:/home/coder/.local/share/code-server
-    working_dir: /home/coder/project
+    working_dir: /home/coder/projects
     command: ["code-server","--bind-addr","0.0.0.0:8443","/home/coder/project"]
     networks: [localnet]
     user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
