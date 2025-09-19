@@ -100,6 +100,7 @@ services:
     working_dir: /home/coder/project
     command: ["code-server","--bind-addr","0.0.0.0:8443","/home/coder/project"]
     networks: [localnet]
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
 
 volumes:
   vscode-data:
