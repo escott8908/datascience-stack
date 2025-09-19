@@ -102,13 +102,6 @@ services:
     networks: [localnet]
     user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
 
-volumes:
-  vscode-data:
-
-
-volumes:
-  pgdata:
-
 networks:
   localnet:
     

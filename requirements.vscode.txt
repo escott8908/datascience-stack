@@ -1,0 +1,38 @@
+# --- Core scientific stack ---
+numpy
+pandas
+scipy
+scikit-learn
+seaborn
+matplotlib
+plotly
+statsmodels
+jupyter
+ipykernel
+openpyxl
+pyarrow
+
+# --- ML & model mgmt ---
+xgboost
+lightgbm
+optuna
+shap
+joblib
+mlflow==2.22.1
+sqlalchemy
+psycopg2-binary
+
+# --- EDA / feature engineering (optional) ---
+ydata-profiling
+missingno
+feature-engine
+category-encoders
+
+# --- Dev tools (already installed elsewhere, but harmless here) ---
+black
+isort
+ruff
+debugpy
+tqdm
+requests
+
