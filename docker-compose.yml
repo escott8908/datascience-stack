@@ -81,6 +81,29 @@ services:
     networks:
       - localnet
 
+  vscode:
+    build:
+      context: .
+      dockerfile: Dockerfile.vscode
+    image: vscode-server:latest
+    container_name: vscode
+    restart: unless-stopped
+    ports:
+      - "8443:8443"
+    environment:
+      PASSWORD: ${CODE_SERVER_PASSWORD}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      TZ: America/Chicago
+    volumes:
+      - /home/escott/data_analysis/vscode/projects:/home/coder/projects
+      - /home/escott/data_analysis/vscode/vscode-data:/home/coder/.local/share/code-server
+    working_dir: /home/coder/project
+    command: ["code-server","--bind-addr","0.0.0.0:8443","/home/coder/project"]
+    networks: [localnet]
+
+volumes:
+  vscode-data:
+
 
 volumes:
   pgdata:
