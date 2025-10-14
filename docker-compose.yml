@@ -71,6 +71,9 @@ services:
     restart: always
     ports:
       - "8888:8888"
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"      
+    env_file:
+      - .env       
     volumes:
       - /home/escott/data_analysis:/home/jovyan
     environment:
