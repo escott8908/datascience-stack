@@ -50,5 +50,7 @@ RUN pip install --no-cache-dir \
     tqdm \
     joblib \
     panel \ 
-    streamlit
+    streamlit \
+    OpenAI \ 
+    jupyter-ai
 
