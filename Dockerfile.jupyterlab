@@ -52,5 +52,5 @@ RUN pip install --no-cache-dir \
     panel \ 
     streamlit \
     OpenAI \ 
-    jupyter-ai
+    jupyter-ai[all]
 

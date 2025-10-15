@@ -77,8 +77,8 @@ services:
     volumes:
       - /home/escott/data_analysis:/home/jovyan
     environment:
-      - MLFLOW_TRACKING_URI=http://mlflow:5000
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
     command: start-notebook.sh --NotebookApp.token=''      
     networks:
       - localnet
